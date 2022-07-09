@@ -9,4 +9,8 @@ import java.util.List;
 public interface TestUserMapper {
 
     List<TestUser> selectAllByUserPhone(@Param("userPhone")String userPhone);
+
+    int insertSelective(TestUser testUser);
+
+
 }
