@@ -1,6 +1,7 @@
 package com.tegasus9.anytest.core;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -17,6 +18,7 @@ import java.util.Properties;
  * @date 2022/7/9 11:02
  * @description
  */
+@Slf4j
 @Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
         @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),})
 public class RerouteToTableInterceptor implements Interceptor {
@@ -31,18 +33,18 @@ public class RerouteToTableInterceptor implements Interceptor {
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
 
         String originalSql = boundSql.getSql();
-        System.out.println(" ->>>originalSql: " + originalSql);
+        //System.out.println(" ->>>originalSql: " + originalSql);
         DataTestSqlObject dataTestSqlObject = DataTestContextHolder.getDataTestSqlObject();
         List<String> tableNameSet = dataTestSqlObject.getTableNameSet();
         String newSql = null;
         for (String tableName : tableNameSet) {
             if (originalSql.contains(tableName)) {
                 newSql = originalSql.replaceAll(tableName, tableName + dataTestSqlObject.getSuffix());
-                System.out.println("find a table= " + tableName);
+                log.info("find a table= " + tableName);
                 break;
             }
         }
-        System.out.println(" ->>>newSql: " + newSql);
+        //System.out.println(" ->>>newSql: " + newSql);
         BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(), newSql, boundSql.getParameterMappings(), boundSql.getParameterObject());
 
         BoundSqlSqlSource sqlSource = new BoundSqlSqlSource(newBoundSql);

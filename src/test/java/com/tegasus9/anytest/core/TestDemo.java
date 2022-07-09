@@ -19,7 +19,7 @@ public class TestDemo extends BaseTest{
     @Resource
     TestUserMapper testUserMapper;
     @Test
-    public void businessTestDemo() {
+    public void simpleVoidTest() {
         // 任意测试
         log.info("test start!");
         TestUser testUser = new TestUser();
