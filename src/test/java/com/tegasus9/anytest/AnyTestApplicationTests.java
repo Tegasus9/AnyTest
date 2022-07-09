@@ -1,4 +1,4 @@
-package com.tegasus9.anytest.anytest;
+package com.tegasus9.anytest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
