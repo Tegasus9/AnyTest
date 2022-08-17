@@ -11,8 +11,11 @@ import java.util.Optional;
  * @description
  */
 class OptionalTest {
+    /**
+     * 嵌套对象属性获取测试。
+     */
     @Test
-    void test() {
+    void nestedObjectTest() {
         User user = new User();
         user.setName("xiongyige");
         user.setAge(18);
@@ -22,7 +25,7 @@ class OptionalTest {
         User.Address address = new User.Address();
 //        address.setCity(city);
         user.setAddress(address);
-        String cityName = Optional.ofNullable(user)
+        String cityName = Optional.of(user)
                 .map(User::getAddress)
                 .map(User.Address::getCity)
                 .map(User.Address.City::getCityName)
